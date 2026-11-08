@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: propertymanagement
+
+resources:
+  - namespace.yaml
+  - infra/zookeeper.yaml
+  - infra/kafka.yaml
+  - infra/db-contract.yaml
+  - infra/db-property.yaml
+  - infra/db-payment.yaml
+  - apps/eureka.yaml
+  - apps/proxy.yaml
+  - apps/property-service.yaml
+  - apps/contract-service.yaml
+  - apps/payment-service.yaml
+
+# Pour utiliser les images du registre GitLab (apres la CI) :
+#   kustomize edit set image propertymanagement-eureka=registry.gitlab.com/<chemin>/discovery-service:<tag>
+images:
+  - name: propertymanagement-eureka
+    newName: propertymanagement-eureka
+    newTag: latest
+  - name: propertymanagement-proxy
+    newName: propertymanagement-proxy
+    newTag: latest
+  - name: propertymanagement-property-service
+    newName: propertymanagement-property-service
+    newTag: latest
+  - name: propertymanagement-contract-service
+    newName: propertymanagement-contract-service
+    newTag: latest
+  - name: propertymanagement-payment-service
+    newName: propertymanagement-payment-service
+    newTag: latest
